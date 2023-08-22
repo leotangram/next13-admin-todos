@@ -1,5 +1,5 @@
 import prisma from '@/lib/prisma'
-import { TodoGrid } from '@/todos'
+import { NewTodo, TodoGrid } from '@/todos'
 import { useEffect } from 'react'
 
 export const metadata = {
@@ -17,7 +17,9 @@ export default async function RestTodosPage() {
 
   return (
     <div>
-      {/* TODO: Formulario para gregar */}
+      <div className="w-full px-3 mx-5 mb-5">
+        <NewTodo />
+      </div>
       <TodoGrid todos={todos} />
     </div>
   )
