@@ -6,6 +6,7 @@ import { TodoItem } from './TodoItem'
 // import * as todosApi from '@/todos/helpers/todos'
 import { useRouter } from 'next/navigation'
 import { toggleTodo } from '../actions/todo-actions'
+import { TodoItemExperimental } from './TodoItemExperimental'
 
 interface TodoGridProps {
   todos?: Todo[]
@@ -23,7 +24,12 @@ export const TodoGrid: FC<TodoGridProps> = ({ todos = [] }) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
       {todos.map(todo => (
-        <TodoItem key={todo.id} todo={todo} togleTodo={toggleTodo} />
+        // <TodoItem key={todo.id} todo={todo} togleTodo={toggleTodo} />
+        <TodoItemExperimental
+          key={todo.id}
+          todo={todo}
+          togleTodo={toggleTodo}
+        />
       ))}
     </div>
   )

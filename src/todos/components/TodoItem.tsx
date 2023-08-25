@@ -1,10 +1,11 @@
 'use client'
 
-import { FC } from 'react'
+import { FC, useState, useTransition } from 'react'
 import { Todo } from '@prisma/client'
 
 import styles from './TodoItem.module.css'
 import { IoCheckboxOutline, IoSquareOutline } from 'react-icons/io5'
+import { useRouter } from 'next/navigation'
 
 interface TodoItemProps {
   todo: Todo
@@ -14,16 +15,36 @@ interface TodoItemProps {
 export const TodoItem: FC<TodoItemProps> = ({ todo, togleTodo }) => {
   const { id, complete, description } = todo
 
+  const router = useRouter()
+
+  const [isFetching, setIsFetching] = useState(false)
+  const [isPending, startTransition] = useTransition()
+
+  const isCompleteOptimistic =
+    isFetching || isPending ? !todo.complete : todo.complete
+
+  const onToggleTodo = async () => {
+    setIsFetching(true)
+    await togleTodo?.(id, !complete)
+    setIsFetching(false)
+
+    startTransition(() => {
+      router.refresh()
+    })
+  }
+
   return (
-    <div className={todo.complete ? styles.todoDone : styles.todoPending}>
+    <div
+      className={isCompleteOptimistic ? styles.todoDone : styles.todoPending}
+    >
       <div className="flex flex-col sm:flex-row justify-start items-center gap-4">
         <div
-          onClick={() => togleTodo(id, !complete)}
+          onClick={() => onToggleTodo()}
           className={`flex p-2 rounded-md cursor-pointer hover:bg-opacity-60 ${
-            complete ? 'bg-blue-100' : 'bg-red-100'
+            isCompleteOptimistic ? 'bg-blue-100' : 'bg-red-100'
           }`}
         >
-          {complete ? (
+          {isCompleteOptimistic ? (
             <IoCheckboxOutline size={30} />
           ) : (
             <IoSquareOutline size={30} />
