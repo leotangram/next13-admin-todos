@@ -6,7 +6,8 @@ import {
   IoCalendarOutline,
   IoCheckboxOutline,
   IoCodeWorkingOutline,
-  IoListOutline
+  IoListOutline,
+  IoPersonOutline
 } from 'react-icons/io5'
 import { SidebarItem } from './SidebarItem'
 import { getServerSession } from 'next-auth'
@@ -38,6 +39,11 @@ const menuItems = [
     icon: <IoBasketOutline size={30} />,
     title: 'Productos',
     path: '/dashboard/products'
+  },
+  {
+    icon: <IoPersonOutline size={30} />,
+    title: 'Perfil',
+    path: '/dashboard/profile'
   }
 ]
 
