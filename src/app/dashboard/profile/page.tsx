@@ -18,7 +18,10 @@ export default function ProfilePage() {
         <span>{session?.user?.name ?? 'No name'}</span>
         <span>{session?.user?.email ?? 'No email'}</span>
         <span>{session?.user?.image ?? 'No image'}</span>
-        <span>{}</span>
+        <span>{session?.user?.id ?? 'No id'}</span>
+        <span className="capitalize">
+          {session?.user?.roles?.join(', ') ?? ['No roles']}
+        </span>
       </div>
     </div>
   )
