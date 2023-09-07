@@ -1,5 +1,13 @@
 import bcrypt from 'bcryptjs'
 import prisma from '@/lib/prisma'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/app/api/auth/[...nextauth]/route'
+
+export const getUserSessionServicer = async () => {
+  const session = await getServerSession(authOptions)
+
+  return session?.user
+}
 
 export const signInEmailPassword = async (email: string, password: string) => {
   if (!email || !password) return null
